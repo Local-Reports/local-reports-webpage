@@ -7,6 +7,7 @@ class SignIn extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			userType: props.userType,
 			signInEmail: "",
 			signInPassword: ""
 		};
@@ -21,7 +22,15 @@ class SignIn extends React.Component {
 	};
 
 	onSubmitSignIn = () => {
-
+		fetch("http://localhost:3000/signin", {
+			method: "post",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({
+				userType: this.state.userType,
+				email: this.state.signInEmail,
+				password: this.state.signInPassword
+			})
+		}).then(response => response.json());
 	};
 
 	render() {
@@ -52,7 +61,11 @@ class SignIn extends React.Component {
 				</div>
 				<div>
 					<Link to="/map">
-						<input type="submit" value="Sign in" />
+						<input
+							type="submit"
+							value="Sign in"
+							onClick={this.onSubmitSignIn}
+						/>
 					</Link>
 				</div>
 				<div>

@@ -1,12 +1,11 @@
 import React, { Component } from "react";
 import "./App.css";
-import TypePerson from "./frontend/TypePerson/TyperPerson";
-import SignIn from "./frontend/SignIn/SignIn";
-import Register from "./frontend/Register/Register";
-import MapDisplay from "./frontend/MapDisplay/MapDisplay";
-import MainPage from "./frontend/MainPage/MainPage";
-import Navigation from "./frontend/Navigation/Navigation";
-import ReportLostPerson from "./frontend/ReportLostPerson/ReportLostPerson";
+import TypePerson from "./frontend/TypePerson/TypePerson.js";
+import SignIn from "./frontend/SignIn/SignIn.js";
+import Register from "./frontend/Register/Register.js";
+import MainPage from "./frontend/MainPage/MainPage.js";
+import Navigation from "./frontend/Navigation/Navigation.js";
+import ReportLostPerson from "./frontend/ReportLostPerson/ReportLostPerson.js";
 
 const initialState = {
 	type: "none",
@@ -32,7 +31,7 @@ class App extends Component {
 		} else if (route === "police" || route === "civilian") {
 			content = <SignIn />;
 		} else if (route === "map") {
-			content = <MapDisplay />;
+	
 		}
 
 		return <div className="App">{content}</div>;

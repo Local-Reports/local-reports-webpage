@@ -1,5 +1,4 @@
 import React from "react";
-import TypePerson from "../TypePerson/TyperPerson";
 
 class MainPage extends React.Component {
 	render() {

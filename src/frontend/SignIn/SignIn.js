@@ -1,4 +1,7 @@
+/** @format */
+
 import React from "react";
+import { Link } from "react-router-dom";
 
 class SignIn extends React.Component {
 	constructor(props) {
@@ -20,6 +23,8 @@ class SignIn extends React.Component {
 	onSubmitSignIn = () => {};
 
 	render() {
+		const { onRouteChange } = this.props;
+
 		return (
 			<div>
 				<div>Sign In</div>
@@ -45,7 +50,12 @@ class SignIn extends React.Component {
 					<input onClick={this.onSubmitSignIn} type="submit" value="Sign in" />
 				</div>
 				<div>
-					<p>Register</p>
+					<p onClick={() => onRouteChange("register")}>Register</p>
+					<ul>
+						<li>
+							<Link to="/register">Register</Link>
+						</li>
+					</ul>
 				</div>
 			</div>
 		);

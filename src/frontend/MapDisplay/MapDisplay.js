@@ -1,6 +1,11 @@
-/** @format */
+// /** @format */
 
-import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
+
+import React, { useRef, useCallback } from 'react';
+import { GoogleMap, useLoadScript, Marker, Autocomplete, DirectionsRenderer} from "@react-google-maps/api";
+import { Link } from "react-router-dom";
+import { Loader } from "@googlemaps/js-api-loader";
+
 
 const libraries = ["places"];
 const mapContainerStyle = {
@@ -8,15 +13,39 @@ const mapContainerStyle = {
 	height: "100vh"
 };
 const center = {
-	lat: 7.2905715, // default latitude
+	lat: 7.715, // default latitude
 	lng: 80.6337262 // default longitude
 };
 
+
+const ps1 = {
+ lat: 6.15,
+ lng: 80.86
+}
+
+
 const App = () => {
 	const { isLoaded, loadError } = useLoadScript({
-		googleMapsApiKey: "AIzaSyBGNeut_skfFi5jKeAEzy3zrRp45RvcNf4",
+		googleMapsApiKey: "AIzaSyCl3bgJ3nNwwT86ZvTFHTymCgQwROaXNPw",
 		libraries
 	});
+
+	const mapRef = useRef();
+	const onMapLoad = useCallback((map) => {
+		mapRef.current = map;
+	}, []);
+
+ const panTo = useCallback((val) =>
+ {
+  const lat = val.latLng.lat()
+  const lng = val.latLng.lng()
+  mapRef.current.panTo({lat, lng});
+		mapRef.current.setZoom(14);
+
+		
+ }, []);
+ 
+ 
 
 	if (loadError) {
 		return <div>Error loading maps</div>;
@@ -28,46 +57,57 @@ const App = () => {
 
 	return (
 		<div>
-			<GoogleMap
+			<div>
+				<ul>
+					<Link to="/report">Report</Link>
+				</ul>
+			</div>
+			<Autocomplete>
+				<input
+				type="text"
+				placeholder="Enter a location"
+				style={{
+					width: '300px',
+					height: '40px',
+					paddingLeft: '10px',
+					marginTop: '10px',
+					marginBottom: '10px',
+				}}
+				/>
+			</Autocomplete>
+   <GoogleMap
+    onLoad={onMapLoad}
 				mapContainerStyle={mapContainerStyle}
 				zoom={10}
 				center={center}>
-				<Marker position={center} />
+				<Marker position={center} onClick={panTo} />
 			</GoogleMap>
 		</div>
 	);
 };
 
-export default App;
+// 
 
-// /** @format */
+/** @format */
 
-// import { Loader } from "@googlemaps/js-api-loader";
 
-// const loader = new Loader({
-// 	apiKey: "YOUR_API_KEY",
-// 	version: "weekly",
-// 	libraries: ["places"]
-// });
 
-// let map;
 
-// const mapOptions = {
-// 	center: {
-// 		lat: 0,
-// 		lng: 0
-// 	},
-// 	zoom: 4
-// };
 
-// /** @format */
+/** @format */
 
-// // Initialize and add the map
+// Initialize and add the map
 // let map;
 // let marker1;
 // let geocoder;
 // let responseDiv;
 // let response;
+//  const loader = new Loader({
+// 		apiKey: "AIzaSyBGNeut_skfFi5jKeAEzy3zrRp45RvcNf4",
+// 		version: "weekly"
+//  });
+
+export default App;
 
 // async function initMap() {
 // 	// The location of Uluru
@@ -75,9 +115,12 @@ export default App;
 //   const Macon = { lat: 32.83609, lng: -83.631653 };
 
 // 	// Request needed libraries.
-// 	//@ts-ignore
-// 	const { Map, InfoWindow } = await google.maps.importLibrary("maps");
-// 	const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary("marker");
+//  //@ts-ignore
+ 
+
+
+// 	const { Map, InfoWindow } = await loader.importLibrary("maps");
+// 	const { AdvancedMarkerElement, PinElement } = await loader.importLibrary("marker");
 
 // 	// The map, centered at Uluru
 // 	map = new Map(document.getElementById("map"), {
@@ -87,7 +130,7 @@ export default App;
 //     mapTypeId: "roadmap",
 // 	});
 
-// 	let geocoder = new google.maps.Geocoder();
+// 	let geocoder = new loader.Geocoder();
 
 // 	const inputText = document.createElement("input");
 
@@ -117,11 +160,11 @@ export default App;
 //   instructionsElement.id = "instructions";
 //   instructionsElement.innerHTML =
 //     "<strong>Instructions</strong>: Enter an address in the textbox to geocode or click on the map to reverse geocode.";
-//   map.controls[google.maps.ControlPosition.TOP_LEFT].push(inputText);
-//   map.controls[google.maps.ControlPosition.TOP_LEFT].push(submitButton);
-//   map.controls[google.maps.ControlPosition.TOP_LEFT].push(clearButton);
-//   map.controls[google.maps.ControlPosition.LEFT_TOP].push(instructionsElement);
-//   map.controls[google.maps.ControlPosition.LEFT_TOP].push(responseDiv);
+//   map.controls[loader.ControlPosition.TOP_LEFT].push(inputText);
+//   map.controls[loader.ControlPosition.TOP_LEFT].push(submitButton);
+//   map.controls[loader.ControlPosition.TOP_LEFT].push(clearButton);
+//   map.controls[loader.ControlPosition.LEFT_TOP].push(instructionsElement);
+//   map.controls[loader.ControlPosition.LEFT_TOP].push(responseDiv);
 
 //   marker1 = new AdvancedMarkerElement({
 // 	map,
@@ -147,13 +190,13 @@ export default App;
 //   // priceTag.textContent = "$2.5M";
 //   // priceTag.appendChild(elem);
 
-//   const marker = new AdvancedMarkerElement({
-//     map,
-// 		position: { lat: 37.42, lng: -122.1 },
-//     content: priceTag,
-//   });
+//   // const marker = new AdvancedMarkerElement({
+//   //   map,
+// 		// position: { lat: 37.42, lng: -122.1 },
+//   //   content: priceTag,
+//   // });
 
-//   const cityCircle = new google.maps.Circle({
+//   const cityCircle = new loader.Circle({
 // 		strokeColor: "#000",
 // 		strokeOpacity: 0.8,
 // 		strokeWeight: 2,
@@ -187,7 +230,7 @@ export default App;
 
 //   for (const city in citymap) {
 // 		// Add the circle for this city to the map.
-// 		const cityCircle = new google.maps.Circle({
+// 		const cityCircle = new loader.Circle({
 // 			strokeColor: "#000",
 // 			strokeOpacity: 0.8,
 // 			strokeWeight: 2,

@@ -20,10 +20,12 @@ class SignIn extends React.Component {
 		this.setState({ signInPassword: event.target.value });
 	};
 
-	onSubmitSignIn = () => {};
+	onSubmitSignIn = () => {
+
+	};
 
 	render() {
-		const { onRouteChange } = this.props;
+		const { userType } = this.props;
 
 		return (
 			<div>
@@ -35,6 +37,7 @@ class SignIn extends React.Component {
 						name="email-address"
 						id="email-address"
 						placeholder="Email"
+						onChange={this.onEmailChange}
 					/>
 				</div>
 				<div>
@@ -44,17 +47,17 @@ class SignIn extends React.Component {
 						name="password"
 						id="password"
 						placeholder="Password"
+						onChange={this.onPasswordChange}
 					/>
 				</div>
 				<div>
-					<input onClick={this.onSubmitSignIn} type="submit" value="Sign in" />
+					<Link to="/map">
+						<input type="submit" value="Sign in" />
+					</Link>
 				</div>
 				<div>
-					<p onClick={() => onRouteChange("register")}>Register</p>
 					<ul>
-						<li>
-							<Link to="/register">Register</Link>
-						</li>
+						<Link to="/register">Register</Link>
 					</ul>
 				</div>
 			</div>

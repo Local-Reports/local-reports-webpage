@@ -1,0 +1,18 @@
+{
+  "files": {
+    "main.css": "/local-reports-webpage/static/css/main.1886fde6.css",
+    "main.js": "/local-reports-webpage/static/js/main.bb5d2c49.js",
+    "static/js/592.0b23ec02.chunk.js": "/local-reports-webpage/static/js/592.0b23ec02.chunk.js",
+    "static/media/background_img.png": "/local-reports-webpage/static/media/background_img.80a1b635ed2bd403231d.png",
+    "static/media/LocalReports.png": "/local-reports-webpage/static/media/LocalReports.05a231e39825e77b3d61.png",
+    "static/media/african_orphan_child_400x400.jpg": "/local-reports-webpage/static/media/african_orphan_child_400x400.3996754f9250c65bd9ee.jpg",
+    "index.html": "/local-reports-webpage/index.html",
+    "main.1886fde6.css.map": "/local-reports-webpage/static/css/main.1886fde6.css.map",
+    "main.bb5d2c49.js.map": "/local-reports-webpage/static/js/main.bb5d2c49.js.map",
+    "592.0b23ec02.chunk.js.map": "/local-reports-webpage/static/js/592.0b23ec02.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.1886fde6.css",
+    "static/js/main.bb5d2c49.js"
+  ]
+}

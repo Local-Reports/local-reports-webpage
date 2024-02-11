@@ -1,0 +1,33 @@
+.input-card {
+    margin-left: 10px;
+    margin-right: 36px;
+    margin-bottom: 10px;
+}
+
+input {
+    height: 50%;
+    width: max-content;
+    padding: 5px 20px;
+    margin: auto;
+}
+
+#register {
+    background-color: #DDE6ED;
+    padding: 8px;
+    border: 2px solid black;
+    border-radius: 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    justify-items: center;
+    margin-right: 20px;
+}
+
+.input-card {
+    margin: 20px 40px;
+    padding: auto;
+}
+
+.input-card label {
+    margin: auto;
+}
+

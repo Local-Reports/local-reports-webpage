@@ -3,9 +3,10 @@
 body {
   margin: 0;
   font-family: 'Poppins', sans-serif;
-
+  background-color: transparent;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
 }
 
 code {

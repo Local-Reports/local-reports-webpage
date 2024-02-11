@@ -1,5 +1,9 @@
+/** @format */
+
 import React from "react";
 import { Link } from "react-router-dom";
+import { BACKEND_URL, withRouter } from "../constants.js";
+import "./ReportLostPerson.css";
 
 class ReportLostPerson extends React.Component {
 	constructor(props) {
@@ -11,8 +15,9 @@ class ReportLostPerson extends React.Component {
 			age: "",
 			height: "",
 			weight: "",
-			address: "",
-			last_location: "",
+			last_latitude: "",
+			last_longitude: "",
+			radius: "",
 			photo: "",
 			award: "",
 			date: "",
@@ -40,12 +45,16 @@ class ReportLostPerson extends React.Component {
 		this.setState({ weight: event.target.value });
 	};
 
-	onAddressChange = event => {
-		this.setState({ address: event.target.value });
+	onLatitudeChange = event => {
+		this.setState({ last_latitude: event.target.value });
 	};
 
-	onLastLocationChange = event => {
-		this.setState({ last_location: event.target.value });
+	onLongitudeChange = event => {
+		this.setState({ last_longitude: event.target.value });
+	};
+
+	onRadiusChange = event => {
+		this.setState({ radius: event.target.value });
 	};
 
 	onPhotoChange = event => {
@@ -64,91 +73,130 @@ class ReportLostPerson extends React.Component {
 		this.setState({ description: event.target.value });
 	};
 
-	onSubmitReport = () => {
-		fetch("http://localhost:3000/report-information", {
+	onSubmitReport = async () => {
+		const { token } = this.props;
+		const resp = await fetch(BACKEND_URL + "/api/upload_report", {
 			method: "post",
-			headers: { "Content-Type": "application/json" },
+			headers: { "Content-Type": "application/json", authorization: token },
 			body: JSON.stringify({
 				first_name: this.state.first_name,
 				last_name: this.state.last_name,
 				age: this.state.age,
 				height: this.state.height,
 				weight: this.state.weight,
-				address: this.state.address,
-				last_location: this.state.last_location,
+				last_latitude: this.state.last_latitude,
+				last_longitude: this.state.last_longitude,
+				radius: this.state.radius,
+				// address: this.state.address,
+				// last_location: this.state.last_location,
 				photo: this.state.photo,
 				award: this.state.award,
-				date: this.state.date,
+				date: Math.floor(this.state.date / 1000),
 				description: this.state.description
 			})
-		}).then(response => response.json());
+		});
+
+		const json = await resp.json();
+		if (resp.status === 200) {
+			console.log(json);
+			this.props.router.navigate("/map");
+		} else {
+			alert(`Error! ${json.error}`);
+
+			// Clear state
+			this.setState({
+				first_name: "",
+				last_name: "",
+				age: "",
+				height: "",
+				weight: "",
+				last_latitude: "",
+				last_longitude: "",
+				radius: "",
+				photo: "",
+				award: "",
+				date: "",
+				description: ""
+			});
+		}
 	};
 
 	render() {
 		return (
-			<div>
-				<div className="title">Report Lost Person</div>
-				<div className="container-report">
-					<div>
-						<label htmlFor="first_name">First Name</label>
-						<input type="text" onChange={this.onFirstNameChange} />
+			<div className="background-RLP">
+				<h1>Report Lost Person</h1>
+				<section id="main">
+					<div className="container-report">
+						<div>
+							<label htmlFor="first_name">First Name</label>
+							<input type="text" onChange={this.onFirstNameChange} />
+						</div>
+						<div>
+							<label htmlFor="last_name">Last Name</label>
+							<input type="text" onChange={this.onLastNameChange} />
+						</div>
+						<div>
+							<label htmlFor="age">Age</label>
+							<input type="number" onChange={this.onAgeChange} />
+						</div>
+						<div>
+							<label htmlFor="height">Height</label>
+							<input type="text" onChange={this.onHeightChange} />
+						</div>
+						<div>
+							<label htmlFor="weight">Weight</label>
+							<input type="text" onChange={this.onWeightChange} />
+						</div>
+
+						<div>
+							<label htmlFor="last_latitude">Last Seen Latitude</label>
+							<input type="text" onChange={this.onLatitudeChange} />
+						</div>
+						<div>
+							<label htmlFor="last_longitude">Last Seen Longitude</label>
+							<input type="text" onChange={this.onLongitudeChange} />
+						</div>
+						<div>
+							<label htmlFor="radius">Photo</label>
+							<input type="number" onChange={this.onRadiusChange} />
+						</div>
+						<div>
+							<label htmlFor="photo">Photo</label>
+							<input id ="photo" type="file" onChange={this.onPhotoChange} />
+						</div>
+						<div>
+							<label htmlFor="award">Reward</label>
+							<input type="number" onChange={this.onAwardChange} />
+						</div>
+						<div>
+							<label htmlFor="date">Date</label>
+							<input type="date" onChange={this.onDateChange} />
+						</div>
+						<div>
+							<label htmlFor="description">Description</label>
+							<textarea
+								name="description"
+								id="description"
+								onChange={this.onDescriptionChange}></textarea>
+						</div>
 					</div>
 					<div>
-						<label htmlFor="last_name">Last Name</label>
-						<input type="text" onChange={this.onLastNameChange} />
+						<button type="submit" onClick={this.onSubmitReport}>
+							Submit
+						</button>
 					</div>
 					<div>
-						<label htmlFor="age">Age</label>
-						<input type="number" onChange={this.onAgeChange} />
+						<Link to="/map">
+							<p>Back</p>
+						</Link>
 					</div>
-					<div>
-						<label htmlFor="height">Height</label>
-						<input type="text" onChange={this.onHeightChange} />
-					</div>
-					<div>
-						<label htmlFor="weight">Weight</label>
-						<input type="text" onChange={this.onWeightChange} />
-					</div>
-					<div>
-						<label htmlFor="address">Address</label>
-						<input type="text" onChange={this.onAddressChange} />
-					</div>
-					<div>
-						<label htmlFor="last_location">Last Location Seen</label>
-						<input type="text" onChange={this.onLastLocationChange} />
-					</div>
-					<div>
-						<label htmlFor="photo">Photo</label>
-						<input type="file" onChange={this.onPhotoChange} />
-					</div>
-					<div>
-						<label htmlFor="award">Award</label>
-						<input type="number" onChange={this.onAwardChange} />
-					</div>
-					<div>
-						<label htmlFor="date">Date</label>
-						<input type="date" onChange={this.onDateChange} />
-					</div>
-					<div>
-						<label htmlFor="description">Description</label>
-						<textarea
-							name="description"
-							id="description"
-							onChange={this.onAddressChange}></textarea>
-					</div>
-				</div>
-				<div>
-					<Link to="/map">
-						<input
-							type="submit"
-							value="Submit"
-							onClick={this.onSubmitReport}
-						/>
-					</Link>
-				</div>
+				</section>
 			</div>
 		);
 	}
 }
 
-export default ReportLostPerson;
+
+const _test = withRouter(ReportLostPerson)
+console.log(_test)
+export default _test;

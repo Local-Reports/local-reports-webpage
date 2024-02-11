@@ -1,0 +1,65 @@
+/* ReportLostPerson.css */
+
+/* General Styles */
+body {
+  font-family: 'Poppins', sans-serif;
+  justify-content: center;
+}
+
+.title {
+  text-align: center;
+  font-size: 16px;
+}
+
+#main {
+  display: flex;
+  background-color: #DDE6ED;
+  padding: 8px;
+  border: 2px solid black;
+  border-radius: 10px;
+  flex-direction: column;
+  align-items: center;
+}
+
+.container-report {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 25px;
+  max-width: 800px;
+  width: 100%;
+}
+
+.container-report div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+.title input[type="text"],
+.title input[type="number"],
+.title input[type="date"],
+.title textarea {
+  justify-content: center;
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box; /* Ensures padding doesn't affect the overall width */
+ /* Allows vertical resizing */
+}
+
+label {
+  margin:auto;
+}
+textarea {
+  margin: auto;
+} 
+
+div{
+  justify-content: center;
+}
+
+#photo {
+  background-color: white;
+}
